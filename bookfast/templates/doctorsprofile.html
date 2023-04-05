@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Doctors Profile</title>
+    <link href="{% static 'doctorsprofile.css' %}" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    
+</head>
+<body>
+
+
+<div class="wrapper">
+  {% for d in doc %}
+    <div class="left">
+        <img src={{d.doctor_img.url}}
+        alt="user" width="110   ">
+        <h4>{{d.doctor_name}}</h4>
+         <p>{{d.doctor_speciality}}</p>
+    </div>
+    <div class="right">
+        <div class="info">
+            <h3>Information</h3>
+            <div class="info_data">
+                 <div class="data">
+                    <h4>Email</h4>
+                    <p>{{d.doctor_email}}</p>
+                 </div>
+                 <div class="data">
+                   <h4>Phone</h4>
+                    <p>{{d.doctor_no}}</p>
+              </div>
+            </div>
+        </div>
+      
+      <div class="projects">
+            <h3>Experiance</h3>
+            <div class="projects_data">
+                 <div class="data">
+                    <h4>Present</h4>
+                    <p>{{d.doctor_present}}</p>
+                 </div>
+                 <div class="data">
+                   <h4>Previous</h4>
+                    <p>{{d.doctor_previous}}</p>
+              </div>
+            </div>
+        </div>
+      
+        <div class="social_media">
+            <ul><center>
+              <li><a href="payment"><i class="book">Book Slot</i></a></li></center>
+            
+          </ul>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div style="width:60px;height:60px;position:fixed;right:10px;bottom:10px;">
+  <a href="https://wa.me/9985554562"><img src={% static '/images/whatsapp.jpeg'%} style="width:60px;height:60px;" /></a>
+</div>
+</body>
+</html>
