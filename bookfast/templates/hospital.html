@@ -58,7 +58,7 @@
             <ul>
               
             {% for i in d %}
-              <li><a href="sangeethhos">{{i.doctor_name}}</a></li>
+              <li><a href="/doctorsprofile?id={{ i.id }}">{{i.doctor_name}}</a></li>
             {% endfor %}
               
             </ul>
@@ -67,7 +67,7 @@
             <ul>
               
             {% for h in hos %} 
-              <li><a href="sangeethhos">{{h.hospital_name}}</a></li>
+              <li><a href="/hospital_detail/{{ h.id }}">{{h.hospital_name}}</a></li>
             {% endfor %}
 
             </ul>
@@ -110,33 +110,49 @@
             
           <div class="col-lg-8 d-flex align-items-stretch">
           {% for pic in hos %}
-            <a href="/sangeethhos"> <img src="{{pic.hospital_img.url}}" height="230px" width="100px" class="card-img-top" ></a>
-          {% endfor %}  
-            <div class="card-body"> 
+            <a href="#"> <img src={{pic.hospital_img.url}} height="230px" width="100px" class="card-img-top" ></a>
+          {% endfor %} 
+          &nbsp; &nbsp; &nbsp; 
+            <div class="ml-5"> 
               <br><br><br>
-              <h4 class="card-title"><center>{{hosp.hospital_name}}</center></h4>
+              <h4 class="card-title ml-5"><center>{{hosp.hospital_name}}</center></h4>
               
-            </div>
-            
-            <div class="card-group">
-              {% for i in doctors %}
-              <div class="card" >
-                <a href="/doctorsprofile?id={{i.id}}"> <img src={{i.doctor_img.url}} height="280px" width="100px" class="card-img-top" ></a>
-                <div class="card-body">  
-                  <h4 class="card-title"><center>{{i.doctor_name}}</center></h4>
-                  <p class="card-text"><strong><center>{{i.doctor_speciality}}</strong></center> </p>
-                  <center><button><a href="/payment" > BOOK NOW </button></center></a>
-                </div>
-                
-              </div>
-              {% endfor %}
-              <br><br>
-             
-
-            </div>  
+            </div>   
           </div> 
+          <form>
+            <div class="rating">
+              &nbsp; &nbsp; &nbsp;
+              <div class="form-submit" style="    margin: 0 0 0 117px;">
+              <a href="\rating"  <button type="button" class="btn btn-info">Rate Here</button></a>
+            </div>
+            </div>
+           
+         </form>
         </div>
       </div>
+
+      <div class="container">
+      <div class="row">
+        {% for i in doctors %}
+        <div class="col-md-3 m-3 ">
+        <div class="card-group">
+          <div class="card" >
+            <a href="/doctorsprofile?id={{i.id}}"> <img src={{i.doctor_img.url}} height="280px" width="100px" class="card-img-top" ></a>
+            <div class="card-body">  
+              <h4 class="card-title"><center>{{i.doctor_name}}</center></h4>
+              <p class="card-text"><strong><center>{{i.doctor_speciality}}</strong></center> </p>
+              <center><button><a href="/payment" > BOOK NOW </button></center></a>
+            </div>
+            
+          </div>
+         
+          <br><br>
+     
+        </div>
+      </div> 
+        {% endfor %}
+      </div> 
+    </div>
       
     </section><!-- End Why Us Section -->
     <div style="width:60px;height:60px;position:fixed;right:10px;bottom:10px;">

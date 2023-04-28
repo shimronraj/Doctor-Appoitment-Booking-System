@@ -1,7 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
-
+from io import BytesIO
+from django.http import HttpResponse
 from django.db.models import Max
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
 
 # Create your views here.
 def index(request):
@@ -14,10 +23,11 @@ def about(request):
     return render(request,'about.html')
 def password(request):
     return render(request,'password.html')
-def contactus(request):
-    return render(request,'contactus.html')
+
 def payment(request):
     return render(request,'payment.html')
+def rating(request):
+    return render(request,'rating.html')
 
 
 
@@ -40,22 +50,26 @@ def bookslot(request):
         time=request.POST['time']
         doctor=request.POST['doctor']
         gender=request.POST['gender']
-        new_slot=appointment(name=name,email=email,phone=phone,date=date,time=time,doctor=doctor,gender=gender)
+        new_slot=appointment(patient_name=name,patient_email=email,patient_no=phone,appo_date=date,appo_time=time,doc_name=doctor,patient_gen=gender)
         new_slot.save()
-
+        pdf_file = generate_pdf(new_slot)
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="receipt.pdf"'
+        return response
+    
     doc=Doctor.objects.all()
     context={'doc':doc}
     
     return render(request,'bookslot.html',context)
-
-
-
-
-
-
-
-
-
+def contactus(request):
+    if request.method == 'POST':
+        name=request.POST['name']
+        email=request.POST['email']
+        subject=request.POST['subject']
+        message=request.POST['subject']
+        new_contact=contact(con_name=name,con_email=email,cont_sub=subject,cont_mess=message)
+        new_contact.save()
+    return render(request,'contactus.html')
 
 
 
@@ -80,18 +94,18 @@ def login2(request):
         pwd = request.POST.get('pwd')
         #print(un,pwd)
         #query to select a record based on a condition
-        ul = login.objects.filter(username=un, password=pwd)
+        ul = login.objects.filter(user_name=un, password=pwd)
         
 
         if len(ul) == 1:
-            request.session['user_name'] = ul[0].username
+            request.session['user_name'] = ul[0].user_name
             request.session['userid'] = ul[0].id
             context2 = {'uname': request.session['user_name']}
-            return render(request,'.home.html',context2)
+            return redirect(home)
         else:
             msg = '<h1> Invalid UserName or Password !!!</h1>'
             context ={ 'msg1':msg }
-            return render(request, 'index.html',context)
+            return render(request, 'login.html',context)
     else:
         msg = ''
         context ={ 'msg1':msg }
@@ -134,8 +148,57 @@ def view_hospital(request,pk):
     hosp=Hospital.objects.get(id=pk)
     doctors=Doctor.objects.filter(hospital=hosp)
     d=Doctor.objects.all()
-    hos=Hospital.objects.all()
+    hos=Hospital.objects.filter(id=pk)
     context={ 'hosp':hosp,'doctors':doctors,'d':d,'hos':hos}
     return render(request,'hospital.html',context)
 
+
+#.................................................................receipt
+def generate_pdf(new_slot):
+    # Create a file-like buffer to receive PDF data.
+    buffer = BytesIO()
+
+    # Create the PDF object, using the BytesIO object as its "file."
+    p = canvas.Canvas(buffer, pagesize=letter)
+    # Register the Arial font.
+    pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
+    # Set the font style.
+    p.setFont("Arial", 16)
+    p.rect(20, 20, 550, 770)
+
+    # Add a header.
+    header_text = 'Book Fast'
+    p.drawString(200, 750, header_text)
+    p.drawString(210, 690, 'Booking Details')
+    p.drawString(200, 450, 'Thank you!!!')
+    p.drawString(472, 720, 'Ernakulam')
+    \
+
+    # Create bullet point list.
+    bullet_list = []
+    bullet_list.append('Name of the Patient:------------------------------ ' + new_slot.patient_name)
+    bullet_list.append('Doctors Name:------------------------------------- ' + new_slot.doc_name)
+    bullet_list.append('Issued Date:-------------------------------------- ' + new_slot.appo_date)
+    bullet_list.append('Issued Time:-------------------------------------- ' + new_slot.appo_time)
+    bullet_list.append('Phone Number:------------------------------------- ' + new_slot.patient_no)
     
+
+    # Add bullet points.
+    y = 600
+    for bullet in bullet_list:
+        p.drawString(130, y, bullet)
+        y -= 20
+
+    # Add a footer.
+    footer_text = 'Page %s' % p.getPageNumber()
+    p.drawString(450, 50, footer_text)
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return buffer
+

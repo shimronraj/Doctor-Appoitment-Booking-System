@@ -57,7 +57,7 @@
           <li class="dropdown"><a href="#"><span>Doctors</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
             {% for i in d %}
-              <li><a href="sangeethhos">{{i.doctor_name}}</a></li>
+              <li><a href="doctorsprofile?id={{ i.id }}">{{i.doctor_name}}</a></li>
             {% endfor %}
               
             </ul>
@@ -65,7 +65,7 @@
           <li class="dropdown"><a href="#"><span>Hospitals</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
             {% for h in hos %} 
-              <li><a href="sangeethhos">{{h.hospital_name}}</a></li>
+              <li><a href="hospital_detail/{{ h.id }}">{{h.hospital_name}}</a></li>
             {% endfor %}
               
             </ul>
@@ -75,7 +75,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="login" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOGOUT</span> </a>
+      <a href="/login" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOGOUT</span> </a>
 
     </div>
   </header><!-- End Header -->
@@ -85,7 +85,7 @@
     <div class="container">
       <h1>Welcome to SpeedBook</h1>
       <h2>"Exceptional care with exceptional technology"</h2>
-      <a href="login" class="btn-get-started scrollto">Get Started</a>
+      <a href="home" class="btn-get-started scrollto">Get Started</a>
     </div>
   </section><!-- End Hero -->
 
@@ -107,10 +107,11 @@
             </div>
           </div>
           <br>
-          
-          <div class="col-lg-8 d-flex align-items-stretch">
+
+          {% for j in hos %}
+          <div class="col-md-4  mt-3 d-flex align-items-stretch">
             <div class="card-group">
-              {% for j in hos %}
+             
               <div class="card">
                 <a href="/hospital_detail/{{j.id}}" > <img src="{{j.hospital_img.url}}" height="280px" width="100px" class="card-img-top" ></a>
                 <div class="card-body">  
@@ -120,14 +121,15 @@
                 </div>
                 
               </div>
-              {% endfor %}
+             
               <br><br>
               
               <br>
                 
             </div>
           </div>
-          
+          {% endfor %}
+
         </div>
       </div>
       

@@ -18,7 +18,7 @@ urlpatterns=[
     path('login',views.login2,name='login'),
     
     
-   
+    path('rating',views.rating,name='rating'),
     path('bookslot',views.bookslot,name='bookslot'),
     path('about',views.about,name='about'),
     path('password',views.password,name='password'),

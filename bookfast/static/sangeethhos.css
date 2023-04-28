@@ -745,4 +745,14 @@ body {
    
   }
 
-  
+ /*rating*/ 
+.rate {
+  background-color: #ffffff;
+  border: .5px solid crimson;
+  border-radius: 20px;
+  color: #fff;
+  padding: 8px;
+  box-shadow: 0 0 30px 0 crimson,
+              0 0 30px 0 crimson,
+              0 0 10px 0 crimson inset;
+}

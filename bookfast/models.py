@@ -33,12 +33,19 @@ class Doctor(models.Model):
     
 class appointment(models.Model):
     appo_date=models.CharField(max_length=10)
-    appo_time=models.IntegerField()
+    appo_time=models.CharField(max_length=10,null=True)
     patient_name=models.CharField(max_length=200)
     doc_name=models.CharField(max_length=200)
     patient_gen=models.CharField(max_length=50,null=True)
     patient_email=models.CharField(max_length=50,null=True)
     patient_no=models.CharField(max_length=50,null=True)
+    
+class contact(models.Model):
+    con_name=models.CharField(max_length=100,null=True)
+    con_email=models.CharField(max_length=50,null=True)
+    cont_mess=models.CharField(max_length=255,null=True)
+    cont_sub=models.CharField(max_length=255,null=True)
+
 class Text(models.Model):
     dis_text=models.CharField(max_length=300)
 

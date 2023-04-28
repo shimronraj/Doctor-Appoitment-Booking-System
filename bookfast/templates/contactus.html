@@ -63,19 +63,19 @@
 
 
           <div class="map-content">
-            <form action="#" method="post">
+            <form action="#" method="post">{% csrf_token %}
               <div class="twice-two">
-                <input type="text" class="form-control" name="w3lName" id="w3lName" placeholder="Name" required="">
-                <input type="email" class="form-control" name="w3lSender" id="w3lSender" placeholder="Email"
+                <input type="text" class="form-control" name="name" id="Name" placeholder="Name" required="">
+                <input type="email" class="form-control" name="email" id="Sender" placeholder=Email"
                   required="">
               </div>
 
               <div class="twice">
-                <input type="text" class="form-control" name="w3lSubject" id="w3lSubject" placeholder="Subject"
+                <input type="text" class="form-control" name="subject" id="Subject" placeholder="Subject"
                   required="">
               </div>
 
-              <textarea name="w3lMessage" class="form-control" id="w3lMessage" placeholder="Message"
+              <textarea name="message" class="form-control" id="message" placeholder="Message"
                 required=""></textarea>
                 <center> <button type="submit" class="btn btn-contact">Send Message</button></center>
             </form>
