@@ -13,7 +13,8 @@
 		
 		<div class="right">
 			<h3>PAYMENT</h3>
-			<form>
+			<form action="" method="POST">
+				{%  csrf_token %}
 				Accepted Card <br>
 				
                 <img src="{% static './images/card1.png' %}" width="100">
@@ -22,14 +23,14 @@
 				<br><br>
 
 				Card Number
-				<input type="text" name="" placeholder="Enter card number"minlength="16" maxlength="16" onkeypress="return isNumberKey(event,this)"  required>
+				<input type="text" name="" placeholder="Enter card number"minlength="16" maxlength="16" onkeypress="return isNumberKey(event,this)"  required="required">
 				
 				Exp month
-				<input type="text" name="" placeholder="Enter Month"  onkeypress="return allowOnlyLetters(event,this);"  required>
+				<input type="text" name="" placeholder="Enter Month"  onkeypress="return allowOnlyLetters(event,this);"  required="required">
 				<div id="zip">
 					<label>
 						Exp year
-						<select>
+						<select required>
 							<option>Choose Year..</option>
 							<option>2022</option>
 							<option>2023</option>
@@ -39,12 +40,14 @@
 					</label>
 						<label>
 						CVV
-						<input type="number" name="" placeholder="CVV">
+						<input type="number" name="" placeholder="CVV" maxlength="3" required="required">
 					</label>
-				</div>
+				</div><br><br>
+				<CENTER><button type="submit" class="square_btn">Make payment</button></CENTER>
 			</form>
 			<br>
-			<CENTER><a href="bookslot" class="square_btn">  MAKE PAYMENT</a></CENTER>
+			
+			
             <br>
             <center><h6>"After Payment You Can download your Receipt"</h6></center>
 		</div>

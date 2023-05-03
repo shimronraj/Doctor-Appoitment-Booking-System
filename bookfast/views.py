@@ -24,11 +24,13 @@ def about(request):
 def password(request):
     return render(request,'password.html')
 
-def payment(request):
-    return render(request,'payment.html')
-def rating(request):
-    return render(request,'rating.html')
 
+
+def payment(request):
+    if request.method == 'POST':
+        return redirect("http://127.0.0.1:8000/bookslot")
+    else:
+        return render(request,'payment.html')
 
 
 def home(request):
@@ -127,7 +129,7 @@ def register_client(request):
         #status = "new"
         if login.objects.filter(user_name=email):
             msg = {'msg1': 'username already exist.....'}
-            return render(request,'/register.html',msg)
+            return render(request,'register.html',msg)
         else:
 
             ul = login(user_name=email, password=password)
@@ -201,4 +203,22 @@ def generate_pdf(new_slot):
     # present the option to save the file.
     buffer.seek(0)
     return buffer
+
+#................................................................rating
+
+def rate(request):
+    id= request.GET.get("id")
+    r= Hospital.objects.get(id=int(id))
+    u = request.session['user_name'] 
+    user = registartion.objects.get(email=u)
+    if request.method == "POST":
+        name = request.POST.get('rate')
+        rat=rating(review=name , user=user , hos=r)
+        rat.save()
+        # new_rating=rating(review=name, user=user, hos=r)
+        # new_rating.save()
+        return redirect('home')
+    else:
+        return render(request, 'rating.html')
+
 

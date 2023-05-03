@@ -31,7 +31,7 @@
           <div class="input-box">
             <span class="details">DATE OF BOOKING</span>
              <fieldset>
-               <input type="date" name="date" size="30" class="form-control" max="2005-01-01" onkeypress="return isNumberKey(event,this)"  required>
+               <input type="date" name="date" size="30" class="form-control"min="2023-05-06" max="2023-05-06" onkeypress="return isNumberKey(event,this)"  required>
              </fieldset>
           </div>
           <div class="input-box">
@@ -61,9 +61,9 @@
           
         </div>
         <div class="gender-details" name="gender">
-          <input type="radio" name="gender" id="dot-1" value="Male">
-          <input type="radio" name="gender" id="dot-2"value="Female">
-          <input type="radio" name="gender" id="dot-3"value="Not prefer to say">
+          <input type="radio" name="gender" id="dot-1" value="Male"required>
+          <input type="radio" name="gender" id="dot-2"value="Female"required>
+          <input type="radio" name="gender" id="dot-3"value="Not prefer to say"required>
           <span class="gender-title">Gender</span>
           <div class="category">
             <label for="dot-1">
@@ -89,9 +89,7 @@
       </form>
     </div>
   </div>
-  <div class="square_btn"><center>
-    <a href="{% static '/images/Speedbook.pdf'%}" download class="btn btn-primary"> Download Recipt</a></center>
-  </div>
+  
 
 <script language="Javascript" type="text/javascript">
 

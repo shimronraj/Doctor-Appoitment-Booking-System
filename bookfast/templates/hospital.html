@@ -77,7 +77,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="login" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOGOUT</span> </a>
+      <a href="/login" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOGOUT</span> </a>
 
     </div>
   </header><!-- End Header -->
@@ -111,7 +111,7 @@
           <div class="col-lg-8 d-flex align-items-stretch">
           {% for pic in hos %}
             <a href="#"> <img src={{pic.hospital_img.url}} height="230px" width="100px" class="card-img-top" ></a>
-          {% endfor %} 
+          
           &nbsp; &nbsp; &nbsp; 
             <div class="ml-5"> 
               <br><br><br>
@@ -123,10 +123,10 @@
             <div class="rating">
               &nbsp; &nbsp; &nbsp;
               <div class="form-submit" style="    margin: 0 0 0 117px;">
-              <a href="\rating"  <button type="button" class="btn btn-info">Rate Here</button></a>
+              <a href="\rating?id={{ pic.id }}"><button type="button" class="btn btn-info">Rate Here</button></a>
             </div>
             </div>
-           
+            {% endfor %} 
          </form>
         </div>
       </div>
