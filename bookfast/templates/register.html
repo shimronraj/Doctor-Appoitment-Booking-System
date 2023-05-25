@@ -24,15 +24,15 @@
           </div>
           <div class="input-box">
             <span class="details">Email</span>
-            <input type="email" name="email" onblur="ValidateEmail(document.for ,m1.email)" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  placeholder="Enter your email"  required>
+            <input type="email" name="email" id="emailInput" onblur="validateEmail()" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  placeholder="Enter your email"  required>
             <span style="color:red;font-size:9px;">{% autoescape off%}{{ msg1 }}{% endautoescape%}</span>
           </div>
           <div class="input-box">
             <span class="details">Phone Number</span>
-            <input type="text" name="phone" placeholder="Enter your number"minlength="10" maxlength="10" onkeypress="return isNumberKey(event,this)"  required>
+            <input type="text" name="phone" placeholder="Enter your number" id="numberInput" onblur="validateNumber()" minlength="10" maxlength="10" onkeypress="return isNumberKey(event,this)"  required>
           </div> <div class="input-box">
             <span class="details">Password</span>
-            <input type="password" name="password" placeholder="Enter your password" required>
+            <input type="password" name="password" pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$" placeholder="Enter your password" required>
           </div>
 
 
@@ -117,5 +117,31 @@ function allowOnlyLetters(e, t)
 
 
     </script>
+    <script>
+      function validateNumber() {
+        var numberInput = document.getElementById("numberInput");
+        var value = numberInput.value;
+  
+        if (value === "0000000000" || value === "1111111111" || value === "2222222222" || value === "3333333333" || value === "4444444444" || value === "5555555555" || value === "6666666666" || value === "7777777777" || value ==="8888888888" || value ==="9999999999")
+        {
+          alert("Please enter a valid phone number");
+          numberInput.value = "";
+          return false;
+        }
+   }
+  </script>
+  <script>
+    function validateEmail() {
+      var emailInput = document.getElementById("emailInput");
+      var email = emailInput.value;
+      var emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/;
+
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid Gmail address!");
+        emailInput.value = "";
+        return false;
+      }
+ }
+</script>
 </body>
 </html>

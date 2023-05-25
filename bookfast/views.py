@@ -26,11 +26,13 @@ def password(request):
 
 
 
-def payment(request):
+def payment(request,id):
     if request.method == 'POST':
-        return redirect("http://127.0.0.1:8000/bookslot")
+        id=request.POST["hospital_id"]
+        r=f"http://127.0.0.1:8000/bookslot/{id}"
+        return redirect(r)
     else:
-        return render(request,'payment.html')
+        return render(request,'payment.html',{'hospital_id':id})
 
 
 def home(request):
@@ -43,7 +45,9 @@ def doctorsprofile(request):
     doc=Doctor.objects.filter(id=int(id))
     context={'doc':doc}
     return render(request,'doctorsprofile.html',context)
-def bookslot(request):
+def bookslot(request,pk):
+    hos=Hospital.objects.get(id=pk)
+    doc=Doctor.objects.filter(hospital=hos)
     if request.method == 'POST':
         name=request.POST['name']
         email=request.POST['email']
@@ -52,6 +56,11 @@ def bookslot(request):
         time=request.POST['time']
         doctor=request.POST['doctor']
         gender=request.POST['gender']
+        if appointment.objects.filter(appo_time=time,doc_name=doctor,appo_date=date):
+            msg="Slot Already Booked"
+            context={'doc':doc,'msg':msg}
+    
+            return render(request,'bookslot.html',context)
         new_slot=appointment(patient_name=name,patient_email=email,patient_no=phone,appo_date=date,appo_time=time,doc_name=doctor,patient_gen=gender)
         new_slot.save()
         pdf_file = generate_pdf(new_slot)
@@ -59,7 +68,6 @@ def bookslot(request):
         response['Content-Disposition'] = 'attachment; filename="receipt.pdf"'
         return response
     
-    doc=Doctor.objects.all()
     context={'doc':doc}
     
     return render(request,'bookslot.html',context)
@@ -72,6 +80,19 @@ def contactus(request):
         new_contact=contact(con_name=name,con_email=email,cont_sub=subject,cont_mess=message)
         new_contact.save()
     return render(request,'contactus.html')
+
+def search_doctors(request):
+    search_query = request.GET.get('search_query')
+    doctors = Doctor.objects.all()
+
+    if search_query:
+        doctors = doctors.filter(doctor_name__icontains=search_query)
+
+    context = {
+        'search_query': search_query,
+        'doctors': doctors
+    }
+    return render(request, 'search_doctors.html', context)
 
 
 
@@ -151,7 +172,8 @@ def view_hospital(request,pk):
     doctors=Doctor.objects.filter(hospital=hosp)
     d=Doctor.objects.all()
     hos=Hospital.objects.filter(id=pk)
-    context={ 'hosp':hosp,'doctors':doctors,'d':d,'hos':hos}
+    hos2=Hospital.objects.get(id=pk)
+    context={ 'hosp':hosp,'doctors':doctors,'d':d,'hos':hos,'k':hos2}
     return render(request,'hospital.html',context)
 
 

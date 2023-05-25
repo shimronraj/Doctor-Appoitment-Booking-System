@@ -7,6 +7,11 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 <body>
+  {% if msg %}
+  <script>
+    alert("Slot Already Taken For This Doctor !");
+  </script>
+  {% endif %}
   
   <div class="container">
     <div class="title">Book Your Slot</div>
@@ -31,7 +36,7 @@
           <div class="input-box">
             <span class="details">DATE OF BOOKING</span>
              <fieldset>
-               <input type="date" name="date" size="30" class="form-control"min="2023-05-06" max="2023-05-06" onkeypress="return isNumberKey(event,this)"  required>
+               <input type="date" name="date" size="30" class="form-control"min="2023-05-06" max="2023-05-07" onkeypress="return isNumberKey(event,this)"  required>
              </fieldset>
           </div>
           <div class="input-box">
