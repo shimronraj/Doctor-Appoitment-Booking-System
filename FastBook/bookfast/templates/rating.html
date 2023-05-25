@@ -1,0 +1,42 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>  </title>
+    <link href="{% static 'rating.css' %}" rel="stylesheet">
+
+</head>	
+<body>
+
+<div class="rating">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="rating">
+
+          <input type='radio' hidden name='rate' id='rating-opt5' value="5"'>	
+          <label for='rating-opt5'><span></span></label>
+     
+          <input type='radio' hidden name='rate' id='rating-opt4' value="4">
+          <label for='rating-opt4'><span></span></label>
+     
+          <input type='radio' hidden name='rate' id='rating-opt3' value="3">
+          <label for='rating-opt3'><span></span></label>
+     
+          <input type='radio' hidden name='rate' id='rating-opt2' value="2">
+          <label for='rating-opt2'><span></span></label>
+     
+          <input type='radio' hidden name='rate' id='rating-opt1' value="1">
+          <label for='rating-opt1'><span></span></label>
+          <div class="form-submit">
+            <input type="submit" value="Rate Now" />
+        </div>
+        </div>
+       
+     </form>
+</div>
+
+</body>
+</html>	

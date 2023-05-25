@@ -1,0 +1,147 @@
+{% load static %}
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"  href="{% static './register.css' %}">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  
+  <div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+      <form action=""method="post">
+        {% csrf_token %}
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">NAME</span>
+            <input type="text" name="name" placeholder="Enter your name" onkeypress="return allowOnlyLetters(event,this);"  required>
+          </div>
+          <div class="input-box">
+            <span class="details">ADDRESS</span>
+            <input type="text" name="address" placeholder="Enter your address" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="email" name="email" id="emailInput" onblur="validateEmail()" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  placeholder="Enter your email"  required>
+            <span style="color:red;font-size:9px;">{% autoescape off%}{{ msg1 }}{% endautoescape%}</span>
+          </div>
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            <input type="text" name="phone" placeholder="Enter your number" id="numberInput" onblur="validateNumber()" minlength="10" maxlength="10" onkeypress="return isNumberKey(event,this)"  required>
+          </div> <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" name="password" pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$" placeholder="Enter your password" required>
+          </div>
+
+
+
+           <div class="input-box">
+            <span class="details">DATE OF BIRTH</span>
+             <fieldset>
+               <input type="date" name="date" size="30" class="form-control" min="1980-01-01" max="2023-05-05" required>
+             </fieldset>
+          </div>
+        </div>
+        <div class="gender-details">
+          <input type="radio" name="gender" id="dot-1" value="Male"required>
+          <input type="radio" name="gender" id="dot-2"value="Female"required>
+          <input type="radio" name="gender" id="dot-3"value="Not prefer to say"required>
+          <span class="gender-title">Gender</span>
+          <div class="category">
+            <label for="dot-1">
+            <span class="dot one"></span>
+            <span class="gender">Male</span>
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span class="gender">Female</span>
+          </label>
+          <label for="dot-3">
+            <span class="dot three"></span>
+            <span class="gender">Prefer not to say</span>
+            </label>
+
+          </div>
+
+        </div>
+        <div class="button">
+          <input type="submit" value="Register">
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+<script language="Javascript" type="text/javascript">
+
+function allowOnlyLetters(e, t)
+{
+   if (window.event)
+   {
+      var charCode = window.event.keyCode;
+   }
+   else if (e)
+   {
+      var charCode = e.which;
+   }
+   else { return true; }
+   if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+       return true;
+   else
+   {
+      alert("Please enter only alphabets");
+      return false;
+   }
+}
+
+
+</script>
+
+<script type="text/javascript">
+
+        function isNumberKey(evt, obj) {
+
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf(".") != -1;
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+
+
+    </script>
+    <script>
+      function validateNumber() {
+        var numberInput = document.getElementById("numberInput");
+        var value = numberInput.value;
+  
+        if (value === "0000000000" || value === "1111111111" || value === "2222222222" || value === "3333333333" || value === "4444444444" || value === "5555555555" || value === "6666666666" || value === "7777777777" || value ==="8888888888" || value ==="9999999999")
+        {
+          alert("Please enter a valid phone number");
+          numberInput.value = "";
+          return false;
+        }
+   }
+  </script>
+  <script>
+    function validateEmail() {
+      var emailInput = document.getElementById("emailInput");
+      var email = emailInput.value;
+      var emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/;
+
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid Gmail address!");
+        emailInput.value = "";
+        return false;
+      }
+ }
+</script>
+</body>
+</html>
